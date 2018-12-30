@@ -22,12 +22,14 @@ zombie = Zombie(bg_size)
 #创建太阳花对象
 sunFlower = SunFlower(bg_size)
 #创建太阳对象
-sun = Sun(sunFlower.rect,bg_size)
+#sun = Sun(sunFlower.rect,bg_size)
 #创建坚果对象
 wallNut = WallNut(bg_size)
 # font = pygame.font.Font("totalSuns",1024)
 # totalSuns = font.render(100,True,(255,255,255),None)
-
+#定义生成太阳的事件
+GENERATORSUNEVNET = pygame.USEREVENT + 1
+pygame.time.set_timer(GENERATORSUNEVNET,5000)
 # 创建太阳数量文本
 text = "950"
 suns_font = pygame.font.SysFont("arial", 25)
@@ -66,11 +68,11 @@ def main():
         if wallNut.active:
             screen.blit(wallNut.images[delay % 13],wallNut.rect)
         # 绘制太阳
-        if delay % 10 == 0:
-            sun = Sun(sunFlower.rect, bg_size)
-            suns.add(sun)
-        suns.update()
-        suns.draw(screen)
+        # if delay % 10 == 0:
+        #     sun = Sun(sunFlower.rect, bg_size)
+        #     suns.add(sun)
+        # suns.update()
+        # suns.draw(screen)
 
         #绘制僵尸
         if zombie.active:
@@ -85,7 +87,12 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-            elif event.type == MOUSEBUTTONDOWN:
+            #生成太阳
+            if event.type == GENERATORSUNEVNET:
+                sun = Sun(sunFlower.rect,bg_size)
+                suns.add(sun)
+                print(suns.__len__())
+            if event.type == MOUSEBUTTONDOWN:
                 pressed_array = pygame.mouse.get_pressed()
                 print(pressed_array)
                 if pressed_array[0]:
@@ -93,13 +100,15 @@ def main():
                     print(x,y)
                     if x <= sun.rect.left + sun.rect.width and y <= sun.rect.top + sun.rect.height:
                         if sun.active:
-                            sun.active = False
+                            #sun.active = False
+                            suns.remove(sun)
                             text = str(int(text) + 50)
                             suns_font = pygame.font.SysFont("arial", 25)
                             suns_number_surface = suns_font.render(text, True, (0, 0, 0), (255, 255, 255))
                             screen.blit(suns_number_surface, (300, 3))
-
-
+        for sun in suns:
+            if sun.active:
+                screen.blit(sun.image,sun.rect)
         pygame.display.update()
 if __name__ == '__main__':
     main()
