@@ -20,9 +20,9 @@ class Bullet(pygame.sprite.Sprite):
         # 获取子弹图片的掩模，用来进行精准碰撞检测
         self.mask = pygame.mask.from_surface(self.image)
         # 设置子弹的移动速度
-        self.speed = 5
+        self.speed = 10
         #设置子弹的生存状态
-        self.active = True
+        self.visible = True
 
 
     # 子弹的移动方法 （向右）
@@ -30,8 +30,7 @@ class Bullet(pygame.sprite.Sprite):
         if self.rect.right < self.width:
             self.rect.left += self.speed
         else:
-            self.active = False
-            self.reset()
+            self.kill()
 
     def update(self):
         if self.rect.right < self.width:
@@ -44,6 +43,6 @@ class Bullet(pygame.sprite.Sprite):
 
 
     # 复位功能
-    def reset(self):
-        self.rect.left, self.rect.top = self.plane_left + self.rect.width,self.plane_top + 20
-        self.active = True
+    # def reset(self):
+    #     self.rect.left, self.rect.top = self.peashooter_left + 45,self.peashooter_top
+    #     self.active = True

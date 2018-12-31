@@ -3,7 +3,7 @@ import pygame
 
 
 class WallNut(pygame.sprite.Sprite):
-    def __init__(self,bg_size):
+    def __init__(self,rect,bg_size):
         super(WallNut, self).__init__()
         # 本地背景的大小
         self.width, self.height =  bg_size[0], bg_size[1]
@@ -12,7 +12,7 @@ class WallNut(pygame.sprite.Sprite):
         # 获取图片位置
         self.rect = self.image.get_rect()
         # 定义坚果的初始化位置
-        self.rect.left, self.rect.top = 250,250
+        self.rect.left, self.rect.top = rect[0],rect[1]
         # 获取坚果图片的掩模，用来进行精准碰撞检测
         self.mask = pygame.mask.from_surface(self.image)
         # 设置太阳的生命状态  True存活，false死亡

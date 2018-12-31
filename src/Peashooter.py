@@ -3,7 +3,7 @@ import pygame
 
 
 class Peashooter(pygame.sprite.Sprite):
-    def __init__(self,bg_size):
+    def __init__(self,rect,bg_size):
         super(Peashooter, self).__init__()
         # 本地背景的大小
         self.width, self.height =  bg_size[0], bg_size[1]
@@ -12,7 +12,7 @@ class Peashooter(pygame.sprite.Sprite):
         # 获取图片位置
         self.rect = self.image.get_rect()
         # 定义豌豆的初始化位置
-        self.rect.left, self.rect.top = 250,100
+        self.rect.left, self.rect.top = rect[0],rect[1]
         # 获取豌豆图片的掩模，用来进行精准碰撞检测
         self.mask = pygame.mask.from_surface(self.image)
         # 设置豌豆的生命状态  True活的，false死的

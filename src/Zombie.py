@@ -3,6 +3,7 @@ import pygame
 
 
 class Zombie(pygame.sprite.Sprite):
+    energy = 100
     def __init__(self,bg_size):
         super(Zombie, self).__init__()
         # 本地背景的大小
@@ -18,13 +19,16 @@ class Zombie(pygame.sprite.Sprite):
         # 设置僵尸的生命状态  True活的，false死的
         self.active = True
         #设置僵尸移动速度
-        self.speed = 1
+        self.speed = 2
+        #设置僵尸的生命
+        self.energy = Zombie.energy
         # 加载僵尸动作
         self.images = []
         self.images.extend([pygame.image.load("../material/images/Zombie_0.png")
-                                    ,pygame.image.load("../material/images/Zombie_1.png")
-                                    ,pygame.image.load("../material/images/Zombie_2.png")
-                                    ,pygame.image.load("../material/images/Zombie_3.png")
+                               , pygame.image.load("../material/images/Zombie_0_hit.jpg")
+                                ,pygame.image.load("../material/images/Zombie_1.png")
+                                ,pygame.image.load("../material/images/Zombie_2.png")
+                                ,pygame.image.load("../material/images/Zombie_3.png")
                                , pygame.image.load("../material/images/Zombie_4.png")
                                , pygame.image.load("../material/images/Zombie_5.png")
                                , pygame.image.load("../material/images/Zombie_6.png")
@@ -44,7 +48,19 @@ class Zombie(pygame.sprite.Sprite):
                                , pygame.image.load("../material/images/Zombie_20.png")
                                , pygame.image.load("../material/images/Zombie_21.png")
                             ])
+        self.dying_images = []
+        self.dying_images.extend([pygame.image.load("../material/images/ZombieDie_0.png")
+                               , pygame.image.load("../material/images/ZombieDie_1.png")
+                               , pygame.image.load("../material/images/ZombieDie_2.png")
+                               , pygame.image.load("../material/images/ZombieDie_3.png")
+                               , pygame.image.load("../material/images/ZombieDie_4.png")
+                               , pygame.image.load("../material/images/ZombieDie_5.png")
+                               , pygame.image.load("../material/images/ZombieDie_6.png")
+                               , pygame.image.load("../material/images/ZombieDie_7.png")
+                               , pygame.image.load("../material/images/ZombieDie_8.png")
+                               , pygame.image.load("../material/images/ZombieDie_9.png")
 
+                            ])
     def move(self):
         if self.rect.left > 250:
             self.rect.left -= self.speed

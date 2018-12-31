@@ -15,7 +15,7 @@ class Sun(pygame.sprite.Sprite):
         # 获取图片位置
         self.rect = self.image.get_rect()
         # 定义太阳的初始化位置
-        self.rect.left, self.rect.top = self.sunFlower_left + 50,self.sunFlower_top + 50
+        self.rect.left, self.rect.top = self.sunFlower_left + 20,self.sunFlower_top + 20
         # 获取太阳图片的掩模，用来进行精准碰撞检测
         self.mask = pygame.mask.from_surface(self.image)
         # 设置太阳的生命状态  True没有被收集，false已经被收集
