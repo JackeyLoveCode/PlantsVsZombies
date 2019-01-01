@@ -10,7 +10,13 @@ from src.Sun import Sun
 from src.WallNut import WallNut
 pygame.init()
 bg_size = (1200,600)
+#初始化音乐模块
+pygame.mixer.init()
+#加载音乐
+pygame.mixer.music.load("../material/music/02 - Crazy Dave (Intro Theme).mp3")
 screen = pygame.display.set_mode((1200,600))
+#游戏结束界面
+
 pygame.display.set_caption("植物大战僵尸")
 background_image_path = "../material/images/background1.jpg"
 sunback_imgage_path = "../material/images/SeedBank.png"
@@ -75,6 +81,9 @@ def main():
             delay = 0
         # 绘制背景
         screen.blit(background,(0,0))
+        ##如果没有音乐流则选择播放
+        if not pygame.mixer.music.get_busy():
+            pygame.mixer.music.play()
         #绘制顶部太阳数量栏
         screen.blit(sunback,(250,0))
         screen.blit(suns_number_surface,(280,60))
@@ -374,6 +383,10 @@ def main():
             if bullet.visible:
                 screen.blit(bullet.image,bullet.rect)
                 bullet.move()
+
+        #判断是否结束
+        if Zombie.victory_zombie_total == 3:
+            break
         pygame.display.update()
 if __name__ == '__main__':
     main()

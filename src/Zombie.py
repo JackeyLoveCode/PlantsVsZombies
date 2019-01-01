@@ -4,6 +4,7 @@ from random import randint
 
 class Zombie(pygame.sprite.Sprite):
     energy = 20
+    victory_zombie_total = 0
     def __init__(self,bg_size):
         super(Zombie, self).__init__()
         # 本地背景的大小
@@ -90,7 +91,9 @@ class Zombie(pygame.sprite.Sprite):
                                , pygame.image.load("../material/images/ZombieAttack_19.png")
                                , pygame.image.load("../material/images/ZombieAttack_20.png")])
     def move(self):
-        if not self.isMeetWallNut:
-            if self.rect.left > 150:
-                self.rect.left -= self.speed
+        #if not self.isMeetWallNut:
+        if self.rect.left > 150:
+            self.rect.left -= self.speed
 
+        else :
+            Zombie.victory_zombie_total += 1
