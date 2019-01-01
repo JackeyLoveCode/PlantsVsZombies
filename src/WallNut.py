@@ -17,6 +17,16 @@ class WallNut(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         # 设置太阳的生命状态  True存活，false死亡
         self.active = True
+        #生命值
+        self.energy = 10
+        #是否遇到僵尸
+        self.isMeetZombie = False
+        #正在啃食坚果的僵尸
+        self.zombies = []
+        #是否遇到旗帜僵尸
+        self.isMeetFlagZombie = False
+        #正在啃食坚果的旗帜僵尸集合
+        self.flagZombies = []
         # 加载坚果动作
         self.images = []
         self.images.extend([pygame.image.load("../material/images/WallNut_00.png")
@@ -34,4 +44,9 @@ class WallNut(pygame.sprite.Sprite):
                                , pygame.image.load("../material/images/WallNut_12.png")
 
                             ])
-
+        self.is_eaten_images = []
+        self.is_eaten_images.extend([
+            pygame.image.load("../material/images/WallNut_body.png"),
+            pygame.image.load("../material/images/WallNut_cracked1.png"),
+            pygame.image.load("../material/images/WallNut_cracked2.png"),
+        ])

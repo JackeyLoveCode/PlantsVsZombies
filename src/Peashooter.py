@@ -17,6 +17,16 @@ class Peashooter(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         # 设置豌豆的生命状态  True活的，false死的
         self.active = True
+        #生命值
+        self.energy = 10
+        #是否遇到僵尸
+        self.isMeetZombie = False
+        #遇到的僵尸列表
+        self.zombies = []
+        # 是否遇到旗帜僵尸
+        self.isMeetFlagZombie = False
+        # 正在啃食豌豆射手的旗帜僵尸集合
+        self.flagZombies = []
         # 加载豌豆动作
         self.images = []
         self.images.extend([pygame.image.load("../material/images/Peashooter_00.png")

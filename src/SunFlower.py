@@ -17,6 +17,16 @@ class SunFlower(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         # 设置太阳花的生命状态  True活的，false死的
         self.active = True
+        #生命值
+        self.energy = 10
+        #是否遇到僵尸
+        self.isMeetZombie = False
+        #正在啃食太阳花的僵尸集合
+        self.zombies = []
+        #是否遇到旗帜僵尸
+        self.isMeetFlagZombie = False
+        #正在啃食太阳花的旗帜僵尸集合
+        self.flagZombies = []
         # 加载太阳花动作
         self.images = []
         self.images.extend([pygame.image.load("../material/images/SunFlower_00.png")
