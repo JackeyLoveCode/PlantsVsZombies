@@ -1,10 +1,11 @@
 '''僵尸'''
 import pygame
 from random import randint
+from random import randrange
 
 class Zombie(pygame.sprite.Sprite):
-    energy = 20
-    victory_zombie_total = 0
+    energy = 30
+
     def __init__(self,bg_size):
         super(Zombie, self).__init__()
         # 本地背景的大小
@@ -14,11 +15,13 @@ class Zombie(pygame.sprite.Sprite):
         # 获取图片位置
         self.rect = self.image.get_rect()
         # 定义僵尸的初始化位置
-        self.rect.left, self.rect.top = randint(900,1200),randint(0,400)
+        self.rect.left, self.rect.top = randint(1100,1200),150 + randrange(0,4) * 90
         # 获取僵尸图片的掩模，用来进行精准碰撞检测
         self.mask = pygame.mask.from_surface(self.image)
         # 设置僵尸的生命状态  True活的，false死的
         self.active = True
+        #判断是否走入指定区域
+        self.isVictory = False
         #僵尸是否遇到坚果
         self.isMeetWallNut = False
         #僵尸是否遇到豌豆射手
@@ -96,4 +99,4 @@ class Zombie(pygame.sprite.Sprite):
             self.rect.left -= self.speed
 
         else :
-            Zombie.victory_zombie_total += 1
+            self.isVictory = True

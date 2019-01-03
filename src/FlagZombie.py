@@ -28,6 +28,8 @@ class FlagZombie(pygame.sprite.Sprite):
         self.isMeetSunFlower = False
         #设置僵尸的生命
         self.energy = FlagZombie.energy
+        #是否走入指定区域
+        self.isVictory = False
         # 加载僵尸动作
         self.images = []
         self.images.extend([pygame.image.load("../material/images/FlagZombie_0.png")
@@ -72,6 +74,7 @@ class FlagZombie(pygame.sprite.Sprite):
 
                             ])
     def move(self):
-        if self.rect.left > 250:
+        if self.rect.left > 150:
             self.rect.left -= self.speed
-
+        else :
+            self.isVictory = True

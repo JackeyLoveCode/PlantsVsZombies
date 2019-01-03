@@ -27,7 +27,7 @@ class Bullet(pygame.sprite.Sprite):
 
     # 子弹的移动方法 （向右）
     def move(self):
-        if self.rect.right < self.width:
+        if self.rect.right < self.width - 200:
             self.rect.left += self.speed
         else:
             self.kill()
