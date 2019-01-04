@@ -6,7 +6,7 @@ class SurFace(pygame.sprite.Sprite):   #有图片或者动态图片时就需要�
     def __init__(self,bg_size):
         super(SurFace,self).__init__()
 
-        self.background = "../material/images/Surface1.png"
+        self.background = "../material/images/Surface.png"
         self.background_image = pygame.image.load(self.background).convert()
 
         self.image1 = pygame.image.load("../material/images/1.png")

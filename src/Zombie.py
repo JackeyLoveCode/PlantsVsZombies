@@ -15,7 +15,7 @@ class Zombie(pygame.sprite.Sprite):
         # 获取图片位置
         self.rect = self.image.get_rect()
         # 定义僵尸的初始化位置
-        self.rect.left, self.rect.top = randint(1100,1200),150 + randrange(0,4) * 90
+        self.rect.left, self.rect.top = randint(1100,1200),210 + randrange(0,3) * 100
         # 获取僵尸图片的掩模，用来进行精准碰撞检测
         self.mask = pygame.mask.from_surface(self.image)
         # 设置僵尸的生命状态  True活的，false死的
