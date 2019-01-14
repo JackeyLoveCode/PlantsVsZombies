@@ -1,7 +1,7 @@
 '''旗帜僵尸'''
 import pygame
 from random import randint
-
+from random import randrange
 class FlagZombie(pygame.sprite.Sprite):
     energy = 40
     def __init__(self,bg_size):
@@ -13,7 +13,7 @@ class FlagZombie(pygame.sprite.Sprite):
         # 获取图片位置
         self.rect = self.image.get_rect()
         # 定义僵尸的初始化位置
-        self.rect.left, self.rect.top = randint(900,1200),randint(0,400)
+        self.rect.left, self.rect.top = randint(1100,1200),210 + randrange(0,3) * 100
         # 获取僵尸图片的掩模，用来进行精准碰撞检测
         self.mask = pygame.mask.from_surface(self.image)
         # 设置僵尸的生命状态  True活的，false死的

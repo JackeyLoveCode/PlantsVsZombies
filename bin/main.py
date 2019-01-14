@@ -10,12 +10,12 @@ from src.Sun import Sun
 from src.WallNut import WallNut
 from src.surface import SurFace
 pygame.init()
-bg_size = (1200,600)
+bg_size = (1300,760)
 #初始化音乐模块
 pygame.mixer.init()
 #加载音乐
 pygame.mixer.music.load("../material/music/18 - Crazy Dave IN-GAME.mp3")
-screen = pygame.display.set_mode((1200,600))
+screen = pygame.display.set_mode(bg_size)
 #游戏结束界面
 gameover_image = pygame.image.load("../material/images/GameOver.png")
 pygame.display.set_caption("植物大战僵尸")
@@ -26,7 +26,8 @@ wallNut_seed = pygame.image.load("../material/images/WallNut.gif")
 peashooter_seed = pygame.image.load("../material/images/Peashooter.gif")
 background = pygame.image.load(background_image_path).convert()
 sunback = pygame.image.load(sunback_imgage_path).convert()
-
+#暂停按钮
+pause = pygame.image.load("../material/images/game_pause_nor.png")
 #太阳花Surface
 sunflower_surface = pygame.image.load("../material/images/SunFlower_00.png")
 #坚果Surface
@@ -68,6 +69,7 @@ def start():
     screen.blit(starting.image6, (13, 20))
     while running:
             for event in pygame.event.get():
+
                 if event.type == pygame.QUIT:
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -165,6 +167,25 @@ def main():
         clock.tick(15)
         if not game_over:
             for event in pygame.event.get():
+                # 暂停处理
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        # global running
+                        running = False
+                        while True:
+                            # screen.blit(pause,(100,100))
+                            for event in pygame.event.get():
+                                if event.type == pygame.QUIT:
+                                    sys.exit()
+                                if event.type == pygame.KEYDOWN:
+                                    if event.key == pygame.K_SPACE:
+                                        running = True
+                                        break
+                                        # print(running)
+                            if running:
+                                break
+                            screen.blit(pause, (650, 380))
+                            pygame.display.update()
                 if event.type == pygame.QUIT:
                     sys.exit()
                 if event.type == MOUSEBUTTONDOWN:
@@ -199,7 +220,7 @@ def main():
                                 suns_number_surface = suns_font.render(text, True, (0, 0, 0), None)
                                 screen.blit(suns_number_surface, (280, 60))
                                 # 创建太阳花对象
-                                sunflower = SunFlower((x // 80 * 80, y // 100 * 100), bg_size)
+                                sunflower = SunFlower((x // 100 * 100, y // 120 * 120), bg_size)
                                 seeds.add(sunflower)
                                 sunFlowers.add(sunflower)
                                 choose = 0
@@ -211,7 +232,7 @@ def main():
                                 suns_number_surface = suns_font.render(text, True, (0, 0, 0), None)
                                 screen.blit(suns_number_surface, (280, 60))
                                 #创建坚果对象
-                                wallnut = WallNut((x // 80 * 80 ,y // 100 * 100),bg_size)
+                                wallnut = WallNut((x // 100 * 100 ,y // 120 * 120),bg_size)
                                 seeds.add(wallnut)
                                 wallNuts.add(wallnut)
                                 choose = 0
@@ -223,7 +244,7 @@ def main():
                                 suns_number_surface = suns_font.render(text, True, (0, 0, 0), None)
                                 screen.blit(suns_number_surface, (280, 60))
                                 #创建豌豆射手对象
-                                peashooter = Peashooter((x // 80 * 80,y // 100 * 100),bg_size)
+                                peashooter = Peashooter((x // 100 * 100,y // 120 * 120),bg_size)
                                 seeds.add(peashooter)
                                 peashooters.add(peashooter)
                                 choose = 0
@@ -290,9 +311,10 @@ def main():
                         if flagZombie.energy <= 0:
                             screen.blit(flagZombie.dying_images[9], flagZombie.rect)
                             flagZombie.kill()
+                            flagZombies.remove(flagZombie)
                             dead_zombie_total += 1
             #计算击杀的僵尸总数
-            if dead_zombie_total >= 2:
+            if dead_zombie_total >= 10:
                 game_over = True
                 win = True
                 # pygame.mixer.music.pause()
@@ -302,12 +324,13 @@ def main():
                 #         sys.exit()
             # 绘制坚果
             for wallnut in wallNuts:
+                print(wallnut.energy)
                 if wallnut.active and not wallnut.isMeetZombie and not wallnut.isMeetFlagZombie and wallnut.energy == 10:
                     screen.blit(wallnut.images[delay % 13], wallnut.rect)
                 elif wallnut.isMeetZombie and wallnut.isMeetFlagZombie and wallnut.energy == 0:
                     wallnut.kill()
                     wallNuts.remove(wallnut)
-                elif wallnut.isMeetZombie and wallnut.isMeetFlagZombie and wallnut.energy != 0:
+                elif (wallnut.isMeetZombie or wallnut.isMeetFlagZombie) and wallnut.energy > 0:
                     screen.blit(wallnut.images[delay % 13], wallnut.rect)
             # 僵尸和坚果碰撞
             for zombie in zombies:
@@ -466,7 +489,7 @@ def main():
                     screen.blit(zombie.attack_images[delay % 21], zombie.rect)
             # 绘制旗帜僵尸
             for flagZombie in flagZombies:
-                if flagZombie.active and flagZombie.energy > 8 and not flagZombie.isMeetWallNut and not flagZombie.isMeetPeashooter\
+                if flagZombie.active and flagZombie.energy > 0 and not flagZombie.isMeetWallNut and not flagZombie.isMeetPeashooter\
                         and not flagZombie.isMeetSunFlower:
                     screen.blit(flagZombie.images[delay % 12], flagZombie.rect)
                     flagZombie.move()
@@ -491,7 +514,7 @@ def main():
                     sys.exit()
         elif game_over and  win:
             pygame.mixer.music.pause()
-            screen.blit(win_surface, (300, 100))
+            screen.blit(win_surface, (280, 200))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
